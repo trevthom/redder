@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Redder
+GenericName=Display Color Filter
+Comment=Start Redder in the system tray
+Exec=redder --silent
+Icon=redder
+Terminal=false
+StartupNotify=false
+OnlyShowIn=X-Cinnamon;
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=2

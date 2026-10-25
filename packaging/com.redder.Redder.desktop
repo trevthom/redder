@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Redder
+GenericName=Display Color Filter
+Comment=Isolate the red channel in the system tray
+Exec=redder
+Icon=redder
+Terminal=false
+Categories=Utility;
+Keywords=red;color;gamma;display;screen;filter;tray;
+StartupNotify=false
+StartupWMClass=Redder

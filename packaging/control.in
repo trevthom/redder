@@ -1,0 +1,15 @@
+Package: redder
+Version: @VERSION@
+Architecture: all
+Maintainer: Redder <redder@localhost>
+Installed-Size: @SIZE@
+Depends: python3 (>= 3.10), python3-gi, gir1.2-gtk-3.0, gir1.2-xapp-1.0, libx11-6, libxrandr2
+Recommends: cinnamon
+Section: utils
+Priority: optional
+Description: red-channel isolation slider in the Cinnamon system tray
+ Redder lives in the system tray and controls the X11 GPU gamma
+ lookup table directly. Drag its vertical slider upward to reduce
+ the green and blue channels to zero, leaving only red; drag it
+ down for normal colors. It restores the original color table when
+ it quits and can recover from a crash on the next launch.
