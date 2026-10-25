@@ -44,7 +44,12 @@ chmod 755 "$BUILD_ROOT/DEBIAN/postinst" "$BUILD_ROOT/DEBIAN/postrm"
 
 rm -f "$DEB_PATH"
 dpkg-deb --root-owner-group --build "$BUILD_ROOT" "$DEB_PATH" >/dev/null
-sha256sum "$DEB_PATH" | tee "${DEB_PATH}.sha256"
+
+# Write the checksum relative to the file name so `sha256sum -c` works on a
+# downloaded copy sitting next to its .sha256 file.
+DEB_NAME="$(basename "$DEB_PATH")"
+( cd "$DIST_DIR" && sha256sum "$DEB_NAME" > "${DEB_NAME}.sha256" )
+cat "${DEB_PATH}.sha256"
 
 echo
 echo "Built: $DEB_PATH"
