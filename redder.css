@@ -1,0 +1,121 @@
+window.redder-window {
+  background-color: transparent;
+  background-image: none;
+}
+
+.redder-card {
+  background-color: #100d0d;
+  background-image: none;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  padding: 12px 10px;
+}
+
+.redder-card.is-isolated {
+  border-color: rgba(255, 59, 48, 0.30);
+}
+
+.redder-title {
+  color: #ff5a4f;
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(255, 59, 48, 0.95), 0 0 16px rgba(255, 59, 48, 0.45);
+}
+
+.scale-edge {
+  color: #9b8c87;
+  font-family: monospace;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.scale-edge-top {
+  color: #b55b52;
+}
+
+.scale-edge-bottom {
+  color: #a79893;
+  font-size: 9px;
+}
+
+scale.redder-scale {
+  padding: 0;
+  background-color: transparent;
+}
+
+scale.redder-scale trough {
+  min-width: 7px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(255, 255, 255, 0.06);
+  border-radius: 99px;
+  background-color: #2a211f;
+  background-image: none;
+}
+
+scale.redder-scale trough highlight {
+  border-radius: 99px;
+  background-image: linear-gradient(to top, #6c110d, #ff3b30);
+}
+
+scale.redder-scale slider {
+  min-width: 24px;
+  min-height: 24px;
+  margin: 0;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #ffffff;
+  border-radius: 99px;
+  background-color: #fff6f0;
+  background-image: none;
+  box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.12), 0 0 12px rgba(255, 59, 48, 0.35);
+}
+
+scale.redder-scale slider:hover {
+  background-color: #ffffff;
+}
+
+scale.redder-scale slider:active {
+  background-color: #ffe7e1;
+}
+
+scale.redder-scale:focus,
+scale.redder-scale:focus trough,
+scale.redder-scale:focus slider {
+  outline-style: none;
+}
+
+scale.redder-scale:focus slider {
+  box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.20), 0 0 14px rgba(255, 59, 48, 0.45);
+}
+
+button.quit-button {
+  min-height: 0;
+  padding: 2px 6px;
+  border-style: none;
+  border-radius: 4px;
+  background-image: none;
+  background-color: transparent;
+  box-shadow: none;
+  color: #8f817c;
+  font-family: monospace;
+  font-size: 9px;
+  text-shadow: none;
+}
+
+button.quit-button:hover {
+  color: #ff6a5f;
+  background-color: rgba(255, 59, 48, 0.08);
+}
+
+button.quit-button:focus {
+  outline-style: none;
+}
+
+scale.redder-scale:disabled {
+  opacity: 0.35;
+}
