@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#080606">
+  <title>Redline — GPU color table</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"><span></span></span>
+      <span class="brand-text">
+        <span class="brand-name">REDLINE</span>
+        <span class="brand-sub">GPU color table</span>
+      </span>
+    </div>
+    <div class="topbar-meta">
+      <div class="status" id="status" data-state="loading" role="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusLabel">Connecting</span>
+      </div>
+      <div class="display-meta">
+        <span class="display-label">Output</span>
+        <span id="displayName">Detecting display</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="control-panel panel" aria-labelledby="pageTitle">
+      <div class="panel-glow" aria-hidden="true"></div>
+
+      <div class="intro">
+        <div class="intro-copy">
+          <p class="eyebrow"><span class="eyebrow-rule"></span>Channel isolation</p>
+          <h1 id="pageTitle">Drain the spectrum.<br><span>Keep the red.</span></h1>
+        </div>
+        <div class="readout">
+          <div class="readout-line">
+            <output id="percentValue" for="isolation">0</output><span class="readout-unit">%</span>
+          </div>
+          <span class="readout-caption">Red isolation</span>
+        </div>
+      </div>
+
+      <p class="lede">Push green and blue out of the GPU lookup table. At full isolation, only red subpixels emit.</p>
+
+      <div class="slider-section">
+        <div class="slider-head">
+          <label for="isolation">Red isolation</label>
+          <span class="state-word" id="stateWord">Full color</span>
+        </div>
+        <input id="isolation" class="range" type="range" min="0" max="100" step="1" value="0"
+               aria-describedby="rangeHint" disabled>
+        <div class="range-labels" aria-hidden="true">
+          <span>0 · full color</span>
+          <span>50</span>
+          <span>red only · 100</span>
+        </div>
+        <p class="hint" id="rangeHint">Drag to blend. Green and blue fall together; red stays at its original calibration.</p>
+      </div>
+
+      <div class="presets" role="group" aria-label="Isolation presets">
+        <span class="preset-label">Jump to</span>
+        <button type="button" class="preset" data-percent="0" aria-pressed="true" disabled>Full color</button>
+        <button type="button" class="preset" data-percent="50" aria-pressed="false" disabled>50 / 50</button>
+        <button type="button" class="preset preset--hot" data-percent="100" aria-pressed="false" disabled>Red only</button>
+      </div>
+
+      <div class="channels" aria-label="Channel output levels">
+        <div class="channel channel--red" data-channel="red">
+          <span class="channel-swatch" aria-hidden="true"></span>
+          <span class="channel-name">Red</span>
+          <span class="channel-role">Preserved</span>
+          <span class="channel-meter" aria-hidden="true"><i id="redBar"></i></span>
+          <span class="channel-value"><span id="redValue">100</span><span class="unit">%</span></span>
+        </div>
+        <div class="channel channel--green" data-channel="green">
+          <span class="channel-swatch" aria-hidden="true"></span>
+          <span class="channel-name">Green</span>
+          <span class="channel-role" id="greenRole">Untouched</span>
+          <span class="channel-meter" aria-hidden="true"><i id="greenBar"></i></span>
+          <span class="channel-value"><span id="greenValue">100</span><span class="unit">%</span></span>
+        </div>
+        <div class="channel channel--blue" data-channel="blue">
+          <span class="channel-swatch" aria-hidden="true"></span>
+          <span class="channel-name">Blue</span>
+          <span class="channel-role" id="blueRole">Untouched</span>
+          <span class="channel-meter" aria-hidden="true"><i id="blueBar"></i></span>
+          <span class="channel-value"><span id="blueValue">100</span><span class="unit">%</span></span>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button type="button" class="restore-button" id="restoreButton" disabled>
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M13.3 6.7A5.6 5.6 0 1 0 13 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M13.5 2.9v4.2H9.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Restore full color
+          <kbd>Esc</kbd>
+        </button>
+        <p class="safety-note">System-wide · restores when this page closes</p>
+      </div>
+
+      <div class="error-message" id="errorMessage" role="alert" hidden>
+        <span class="error-mark" aria-hidden="true">!</span>
+        <p id="errorText"></p>
+      </div>
+    </section>
+
+    <aside class="preview-panel panel" aria-labelledby="previewTitle">
+      <div class="panel-glow panel-glow--soft" aria-hidden="true"></div>
+
+      <div class="preview-head">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-rule"></span>Signal preview</p>
+          <h2 id="previewTitle">What the panel sees</h2>
+        </div>
+        <span class="preview-badge" id="previewBadge">Full spectrum</span>
+      </div>
+
+      <div class="canvas-frame">
+        <canvas id="preview" width="720" height="470" role="img"
+                aria-label="Simulated display scene at zero percent red isolation"></canvas>
+        <div class="canvas-vignette" aria-hidden="true"></div>
+        <div class="canvas-scan" aria-hidden="true"></div>
+        <div class="canvas-caption" aria-hidden="true"><span>Frame 01</span><span>Simulated look</span></div>
+      </div>
+
+      <div class="swatch-block">
+        <p class="section-label">Resulting palette</p>
+        <div class="swatches" id="swatches" aria-hidden="true">
+          <span class="swatch" data-rgb="255,78,66"></span>
+          <span class="swatch" data-rgb="88,214,122"></span>
+          <span class="swatch" data-rgb="77,139,255"></span>
+          <span class="swatch" data-rgb="245,240,232"></span>
+          <span class="swatch" data-rgb="72,214,216"></span>
+          <span class="swatch" data-rgb="246,193,75"></span>
+        </div>
+        <div class="swatch-labels" aria-hidden="true">
+          <span>Red</span><span>Green</span><span>Blue</span><span>White</span><span>Cyan</span><span>Amber</span>
+        </div>
+      </div>
+
+      <div class="notes">
+        <div class="note">
+          <span class="note-index">01</span>
+          <p><strong>Red stays lit.</strong> The saved red curve is written back untouched.</p>
+        </div>
+        <div class="note">
+          <span class="note-index">02</span>
+          <p><strong>Green and blue hit zero.</strong> Direct 16-bit ramp writes bypass the CLI’s floor.</p>
+        </div>
+      </div>
+
+      <div class="preview-foot">
+        <span id="crtcLabel">XRandR · connecting</span>
+        <span class="local-tag"><span aria-hidden="true"></span>Local only</span>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <span>Redline / X11 gamma table controller</span>
+    <span>Applies to every connected display</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
