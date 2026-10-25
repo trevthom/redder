@@ -92,7 +92,7 @@ removed.
 ## Build
 
 ```bash
-./build_deb.sh
+bash build_deb.sh
 ```
 
 This creates `dist/redder_1.0.0_all.deb` and
